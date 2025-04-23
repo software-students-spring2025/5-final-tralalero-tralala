@@ -1,0 +1,11 @@
+name: Frontend CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build frontend
+        run: echo "🧪 Frontend CI placeholder"
