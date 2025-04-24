@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mongo:
     image: mongo:latest
@@ -13,11 +11,19 @@ services:
     build: ./lost-found-campus/backend
     container_name: backend
     ports:
-      - "5000:5000"
+      - "5001:5001"
     env_file:
       - .env
     depends_on:
       - mongo
+
+  frontend:
+    build: ./lost-found-campus/backend
+    container_name: frontend
+    ports:
+      - "3000:80"  # hostPort:containerPort
+    depends_on:
+      - backend  # If frontend calls backend APIs
 
 volumes:
   mongo-data:
