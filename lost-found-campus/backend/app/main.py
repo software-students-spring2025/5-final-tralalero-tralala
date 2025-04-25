@@ -11,18 +11,27 @@ app.secret_key = "supersecret"
 
 @app.route("/items/lost", methods=["POST"])
 def submit_lost_item():
+    '''
+    Allows users to submit entry for a lost item and adds it to the database
+    '''
     data = request.get_json()
     insert_item(data)
     return jsonify({"message": "lost item added"}), 201
 
 @app.route("/items", methods=["GET"])
 def get_items():
+    '''
+    Get all items of a given status
+    '''
     status = request.args.get("status")
     items = get_all_items(status)
     return jsonify(items), 200
 
 @app.route("/items/<title>", methods=["DELETE"])
 def delete_item(title):
+    '''
+    Delete an entry by title
+    '''
     result = delete_item_by_title(title)
     if result.deleted_count > 0:
         return jsonify({"message": f"{result.deleted_count} item(s) deleted"}), 200
@@ -31,6 +40,9 @@ def delete_item(title):
 
 @app.route("/items/id/<item_id>", methods=["DELETE"])
 def delete_item_by_id_route(item_id):
+    '''
+    Delete an entry by id
+    '''
     result = delete_item_by_id(item_id)
     if result and result.deleted_count > 0:
         return jsonify({"message": f"{result.deleted_count} item(s) deleted"}), 200
@@ -39,6 +51,9 @@ def delete_item_by_id_route(item_id):
 
 @app.route("/items/id/<item_id>", methods=["PUT"])
 def update_item():
+    '''
+    Update an item by id
+    '''
     data = request.get_json()
     modified_count = update_item_by_id(item_id, data)
     if modified_count is None:
@@ -51,6 +66,9 @@ def update_item():
 
 @app.route("/register", methods=["POST"])
 def register():
+    '''
+    User registration including email, username, and password
+    '''
     data = request.get_json()
     email = data.get("email")
     username = data.get("username")
@@ -64,6 +82,9 @@ def register():
 
 @app.route("/login", methods=["POST"])
 def login():
+    '''
+    Enable user login using email and password
+    '''
     data = request.get_json()
     email = data.get("email")
     password = data.get("password")
@@ -73,6 +94,14 @@ def login():
         return jsonify({"message": "Login successful"}), 200
     else:
         return jsonify({"error": "Invalid credentials"}), 401
+
+@app.route("/logout", methods=["POST"])
+def logout():
+    '''
+    Log the user out by clearing the session
+    '''
+    session.clear()
+    return jsonify({"message": "Logout successful"}), 200
 
 if __name__ == "__main__":
     print("🚀 Flask server running at http://localhost:5001")
