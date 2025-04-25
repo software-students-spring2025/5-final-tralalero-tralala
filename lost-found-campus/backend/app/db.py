@@ -31,9 +31,10 @@ def geocode_location(location_text):
         pass  
     return None, None
 
-def insert_item(data):
+def insert_item(data, user_email):
     data["status"] = "lost"
     data["created_at"] = datetime.utcnow().isoformat()
+    data["owner"] = user_email
 
     location = data.get("location")
     if location:
@@ -46,30 +47,35 @@ def insert_item(data):
 
     return items.insert_one(data)
 
-def get_all_items(status=None):
+def get_all_items(status=None, owner=None):
     query = {}
     if status:
         query["status"] = status
+    if owner:
+        query["owner"] = owner
     return list(items.find(query, {"_id": 0}))
 
 def update_item(query, update_fields):
     update_fields["updated_at"] = datetime.utcnow().isoformat()
     return items.update_one(query, {"$set": update_fields})
 
-def delete_item_by_title(title):
-    return items.delete_many({"title": title})
+def delete_item_by_title(title, owner_email):
+    return items.delete_many({"title": title, "owner": owner_email})
 
-def delete_item_by_id(item_id):
+def delete_item_by_id(item_id, owner_email):
     try:
-        return items.delete_one({"_id": ObjectId(item_id)})
+        return items.delete_one({
+            "_id": ObjectId(item_id),
+            "owner": owner_email
+            })
     except:
         return None
     
-def update_item_by_id(item_id, update_fields):
+def update_item_by_id(item_id, update_fields, owner_email):
     update_fields["updated_at"] = datetime.utcnow().isoformat()
     try:
         result = items.update_one(
-            {"_id": ObjectId(item_id)},
+            {"_id": ObjectId(item_id), "owner": owner_email},
             {"$set": update_fields}
         )
         return result.modified_count
@@ -95,7 +101,6 @@ def verify_user(email, password):
     if not user:
         return False
     return bcrypt.checkpw(password.encode('utf-8'), user["password"])
-
     
 
 __all__ = [
@@ -104,6 +109,7 @@ __all__ = [
     "get_all_items",
     "delete_item_by_title",
     "delete_item_by_id",
+    "update_item_by_id",
     "create_user", 
     "verify_user"
 ]
