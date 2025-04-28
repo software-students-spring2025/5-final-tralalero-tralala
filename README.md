@@ -43,11 +43,16 @@ DEBUG=True
 ```bash
 docker-compose up --build
 ```
+Frontend: http://localhost:3000
+Backend: http://localhost:5001
+MongoDB runs internally
 ---
 
-Frontend: http://localhost:3000
-Backend: http://localhost:5000
-MongoDB runs internally
+## When Done
+```bash
+docker-compose down
+```
+After Ctrl+C to stop the process and remove docker containers.
 
 ### Note
 Make sure Docker Desktop is installed and running.
