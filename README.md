@@ -25,6 +25,19 @@ pip install -r requirements.txt
 ```
 ---
 
+### Create Environment File
+
+```bash
+cp .env.example .env
+```
+---
+
+## Run Full System with Docker
+```bash
+docker-compose up --build
+```
+---
+
 ## 👨‍💻 Contributors
 
 - [Tim Yan](https://github.com/t1mmmmm)
