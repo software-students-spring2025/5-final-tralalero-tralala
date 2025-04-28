@@ -61,5 +61,5 @@ Each subsystem has independent CI/CD with GitHub Actions and DockerHub image pus
 
 - [Tim Yan](https://github.com/t1mmmmm)
 - [Kenny Pan](https://github.com/kenny-pan)
-- []()
-- []()
+- [Winter Li](https://github.com/YYukin0)
+- [Warren Wu](https://github.com/W0rren12)
