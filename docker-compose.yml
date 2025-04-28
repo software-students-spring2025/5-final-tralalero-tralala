@@ -18,7 +18,7 @@ services:
       - mongo
 
   frontend:
-    build: ./lost-found-campus/backend
+    build: ./lost-found-campus/frontend
     container_name: frontend
     ports:
       - "3000:80"  # hostPort:containerPort
