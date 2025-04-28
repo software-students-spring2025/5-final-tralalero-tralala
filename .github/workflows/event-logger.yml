@@ -12,7 +12,7 @@ jobs:
       COMMIT_LOG_API: ${{ secrets.COMMIT_LOG_API }}
       GITHUB_LOGIN: ${{ github.actor }} # github login also available in github.triggering_actor, github.event.sender.login
       COMMITS: ${{ toJSON(github.event.commits) }}
-      REPOSITORY_URL: ${{ github.repositoryUrl }}
+      REPOSITORY_URL: ${{ github.event.repository.clone_url }}
       EVENT_TYPE: ${{ github.event_name }}
       EVENT_ACTION: ${{ github.event.action }}
       PR_MERGED: ${{ github.event.pull_request.merged }}
@@ -44,7 +44,13 @@ jobs:
         run: |
           echo $COMMITS > commits.json
           cat commits.json # debugging
-          pipenv run gitcommitlogger -r $(echo $REPOSITORY_URL) -t pull_request_merged -d $(echo $PR_CLOSED_AT) -un $(echo $GITHUB_LOGIN) -i commits.json -o commit_stats.csv -u $(echo $COMMIT_LOG_API) -v
+          pipenv run gitcommitlogger \
++            -r "$REPOSITORY_URL" \
++            -t "$EVENT_TYPE" \
++            -i commits.json \
++            -o commit_stats.csv \
++            -u "$COMMIT_LOG_API" \
++            -v
       - name: Log pull request closed without merge
         if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == false
         run: |
