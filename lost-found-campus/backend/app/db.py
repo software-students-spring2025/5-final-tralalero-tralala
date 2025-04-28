@@ -3,7 +3,7 @@
 import os
 from datetime import datetime
 from bson.objectid import ObjectId
-
+from bson.errors import InvalidId
 from dotenv import load_dotenv
 from pymongo import MongoClient
 import bcrypt
@@ -11,7 +11,6 @@ import requests
 
 load_dotenv()
 
-# MongoDB setup
 client = MongoClient(os.getenv("MONGO_URI"))
 db = client["lostfound"]
 items = db["items"]
@@ -28,18 +27,13 @@ def geocode_location(location_text):
         data = resp.json()
         if data:
             return float(data[0]["lat"]), float(data[0]["lon"])
-    except Exception as e:
-        # In production you might log this exception
+    except (requests.RequestException, ValueError):
         pass
     return None, None
 
 
-def insert_item(data, user_email):
-    """
-    Insert a new lost item.
-    Adds status, timestamps, owner, and geo-coordinates if location provided.
-    """
-    data["status"] = "lost"
+def insert_item(data, user_email): 
+    data.setdefault("status", "lost")
     data["created_at"] = datetime.utcnow().isoformat()
     data["owner"] = user_email
 
@@ -55,7 +49,7 @@ def insert_item(data, user_email):
     return items.insert_one(data)
 
 
-def get_all_items(status=None, owner=None):
+def get_all_items(status=None, owner=None):  
     query = {}
     if status:
         query["status"] = status
@@ -75,24 +69,24 @@ def delete_item_by_title(title, owner_email):
 
 def delete_item_by_id(item_id, owner_email):
     try:
-        return items.delete_one({
-            "_id": ObjectId(item_id),
-            "owner": owner_email
-        })
-    except Exception:
+        oid = ObjectId(item_id)
+    except InvalidId:
         return None
+    return items.delete_one({"_id": oid, "owner": owner_email})
 
 
 def update_item_by_id(item_id, update_fields, owner_email):
-    update_fields["updated_at"] = datetime.utcnow().isoformat()
     try:
-        result = items.update_one(
-            {"_id": ObjectId(item_id), "owner": owner_email},
-            {"$set": update_fields}
-        )
-        return result.modified_count
-    except Exception:
+        oid = ObjectId(item_id)
+    except InvalidId:
         return None
+
+    update_fields["updated_at"] = datetime.utcnow().isoformat()
+    result = items.update_one(
+        {"_id": oid, "owner": owner_email},
+        {"$set": update_fields}
+    )
+    return result.modified_count
 
 
 def create_user(email, username, password):
