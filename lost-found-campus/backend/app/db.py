@@ -1,5 +1,6 @@
-# backend/app/db.py
-
+"""
+This module handles database operations for the Lost and Found backend.
+"""
 import os
 from datetime import datetime
 from bson.objectid import ObjectId

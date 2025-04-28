@@ -25,6 +25,41 @@ pip install -r requirements.txt
 ```
 ---
 
+### Create Environment File
+
+```bash
+cp .env.example .env
+```
+
+edit the env file if needed, it should contain:
+```bash
+MONGO_URI=mongodb://mongo:27017/lostfound
+SECRET_KEY=your-secret-key
+DEBUG=True
+```
+---
+
+## Run Full System with Docker
+```bash
+docker-compose up --build
+```
+---
+
+Frontend: http://localhost:3000
+Backend: http://localhost:5000
+MongoDB runs internally
+
+### Note
+Make sure Docker Desktop is installed and running.
+
+If ports 3000 or 5001 are busy, stop other apps or change ports in docker-compose.yml.
+
+Each subsystem has independent CI/CD with GitHub Actions and DockerHub image push.
+---
+
 ## 👨‍💻 Contributors
 
 - [Tim Yan](https://github.com/t1mmmmm)
+- [Kenny Pan](https://github.com/kenny-pan)
+- [Winter Li](https://github.com/YYukin0)
+- [Warren Wu](https://github.com/W0rren12)
