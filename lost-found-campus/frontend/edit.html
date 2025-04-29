@@ -33,6 +33,10 @@
     <script>
     let itemId = "";
 
+    const API_BASE = location.hostname === "localhost"
+    ? "http://localhost:5001"
+    : "http://167.99.148.70:5001"; //for both deployment and local to run
+
     document.addEventListener('DOMContentLoaded', function () {
         // 1. Extract itemId from URL
         const params = new URLSearchParams(window.location.search);
@@ -45,7 +49,7 @@
         }
 
         // 2. Fetch the item details
-        fetch('http://localhost:5001/items', {
+        fetch(`${API_BASE}/items`, {
             method: 'GET',
             credentials: 'include'
         })
@@ -80,7 +84,7 @@
                 description: document.getElementById('description').value
             };
 
-            fetch(`http://localhost:5001/items/id/${itemId}`, {
+            fetch(`${API_BASE}/items/id/${itemId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

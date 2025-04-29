@@ -57,8 +57,12 @@
     <script>
     let allItems = [];
 
+    const API_BASE = location.hostname === "localhost"
+    ? "http://localhost:5001"
+    : "http://167.99.148.70:5001"; //for both deployment and local to run
+
     document.addEventListener('DOMContentLoaded', function () {
-        fetch('http://localhost:5001/items', {
+        fetch(`${API_BASE}/items`, {
             method: 'GET',
             credentials: 'include'
         })
@@ -105,7 +109,7 @@ document.getElementById('submitButton').addEventListener('click', function () {
     window.location.href = '/submit.html';
 });
 document.getElementById('logoutButton').addEventListener('click', function () {
-    fetch('http://localhost:5001/logout', {
+    fetch(`${API_BASE}/logout`, {
         method: 'POST',
         credentials: 'include'
     })
