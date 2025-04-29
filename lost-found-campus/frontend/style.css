@@ -165,4 +165,88 @@
       border-radius: 0;
     }
   }
-  
+  .item-card {
+    background: white;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(87, 6, 140, 0.15);
+}
+.search-container {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+#searchInput {
+  padding: 10px;
+  width: 50%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.top-right {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+#profileButton {
+  background-color: var(--nyu-violet);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#profileButton:hover {
+  background-color: #5e0c94; /* slightly darker purple on hover */
+}
+
+#submitButton {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: white;
+  color: var(--nyu-violet);
+  border: 2px solid var(--nyu-violet);
+  border-radius: 50%;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+
+  /* ✅ Center using Flexbox */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+
+#submitButton:hover {
+  background-color: var(--nyu-violet);
+  color: white;
+}
+
+#logoutButton {
+  background-color: var(--nyu-violet);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 10px; /* spacing between logout and profile */
+  transition: background-color 0.3s ease;
+}
+
+#logoutButton:hover {
+  background-color: #5e0c94; /* same darker purple on hover */
+}

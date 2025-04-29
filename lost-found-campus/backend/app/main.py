@@ -37,7 +37,7 @@ def get_items():
 
     status = request.args.get("status")
     owner = session["user"]
-    items = get_all_items(status=status, owner=owner)
+    items = get_all_items(status=status)
     return jsonify(items), 200
 
 
