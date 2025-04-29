@@ -2,7 +2,7 @@
 
 import os
 from flask import Flask, request, jsonify, session
-
+from flask_cors import CORS
 from .db import (
     insert_item,
     get_all_items,
@@ -16,6 +16,7 @@ from .db import (
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "supersecret")
 
+CORS(app, supports_credentials=True)
 
 @app.route("/items/lost", methods=["POST"])
 def submit_lost_item():
