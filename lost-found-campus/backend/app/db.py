@@ -56,14 +56,27 @@ def insert_item(data, user_email):
     return items.insert_one(data)
 
 
+# def get_all_items(status=None, owner=None):
+#     query = {}
+#     if status:
+#         query["status"] = status
+#     if owner:
+#         query["owner"] = owner
+#     return list(items.find(query, {"_id": 0}))
+
 def get_all_items(status=None, owner=None):
     query = {}
     if status:
         query["status"] = status
     if owner:
         query["owner"] = owner
-    return list(items.find(query, {"_id": 0}))
 
+    items_list = []
+    for item in items.find(query):
+        item["_id"] = str(item["_id"])  # important!
+        items_list.append(item)
+
+    return items_list
 
 def update_item(query, update_fields):
     update_fields["updated_at"] = datetime.utcnow().isoformat()

@@ -52,6 +52,8 @@ def delete_item(title):
 
 @app.route("/items/id/<item_id>", methods=["DELETE"])
 def delete_item_by_id_route(item_id):
+    owner_email = session.get("user")
+    print(f"Trying to delete item with id: {item_id}, owner: {owner_email}")
     result = delete_item_by_id(item_id, session.get("user"))
     if result and result.deleted_count > 0:
         return jsonify({"message": f"{result.deleted_count} item(s) deleted"}), 200
