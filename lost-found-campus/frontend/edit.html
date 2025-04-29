@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Item</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Edit Your Item</h1>
+
+    <div class="form-container">
+        <form id="editForm">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="status">Status</label>
+            <select id="status" name="status" required>
+                <option value="lost">Lost</option>
+                <option value="found">Found</option>
+            </select>
+
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" required>
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+
+            <button type="submit">Update Item</button>
+        </form>
+        <p id="updateMessage"></p>
+    </div>
+
+    <script>
+    let itemId = "";
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // 1. Extract itemId from URL
+        const params = new URLSearchParams(window.location.search);
+        itemId = params.get('id');
+
+        if (!itemId) {
+            document.getElementById('updateMessage').innerText = "❌ No item ID provided.";
+            document.getElementById('editForm').style.display = 'none';
+            return;
+        }
+
+        // 2. Fetch the item details
+        fetch('http://localhost:5001/items', {
+            method: 'GET',
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(items => {
+            const item = items.find(item => item._id === itemId);
+
+            if (!item) {
+                document.getElementById('updateMessage').innerText = "❌ Item not found.";
+                document.getElementById('editForm').style.display = 'none';
+                return;
+            }
+
+            document.getElementById('title').value = item.title;
+            document.getElementById('status').value = item.status;
+            document.getElementById('location').value = item.location;
+            document.getElementById('description').value = item.description;
+        })
+        .catch(error => {
+            console.error('Error fetching item:', error);
+            document.getElementById('updateMessage').innerText = "❌ Network error.";
+        });
+
+        // 3. Handle form submission
+        document.getElementById('editForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const updatedData = {
+                title: document.getElementById('title').value,
+                status: document.getElementById('status').value,
+                location: document.getElementById('location').value,
+                description: document.getElementById('description').value
+            };
+
+            fetch(`http://localhost:5001/items/id/${itemId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify(updatedData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/profile.html'; // ✅ Redirect back to profile page
+                } else {
+                    document.getElementById('updateMessage').innerText = "❌ Update failed.";
+                }
+            })
+            .catch(error => {
+                console.error('Error updating item:', error);
+                document.getElementById('updateMessage').innerText = "❌ Network error.";
+            });
+        });
+    });
+    </script>
+</body>
+</html>
