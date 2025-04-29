@@ -12,7 +12,13 @@ A web platform for NYU students to report lost items and find items found by oth
 - [`t1mmmmm/backend`](https://hub.docker.com/r/t1mmmmm/backend)
 - [`t1mmmmm/frontend`](https://hub.docker.com/r/t1mmmmm/frontend)
 
+> 🟢 Live site: [http://167.99.148.70:3000](http://167.99.148.70:3000)
 ---
+## Sites
+🔗 Deployed frontend: [http://167.99.148.70:3000](http://167.99.148.70:3000)  
+🔧 Deployed backend: [http://167.99.148.70:5001](http://167.99.148.70:5001)  
+
+> You can still run the project locally using the instructions below.
 
 ## ⚙️ Setup Instructions (Local Dev)
 
