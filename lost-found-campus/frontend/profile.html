@@ -19,8 +19,12 @@
     <script>
     let userEmail = "";
 
+    const API_BASE = location.hostname === "localhost"
+    ? "http://localhost:5001"
+    : "http://167.99.148.70:5001"; //for both deployment and local to run
+
     document.addEventListener('DOMContentLoaded', function () {
-        fetch('http://localhost:5001/me', {
+        fetch(`${API_BASE}/me`, {
             method: 'GET',
             credentials: 'include'
         })
@@ -45,7 +49,7 @@
     });
 
     function loadUserItems() {
-        fetch('http://localhost:5001/items', {
+        fetch(`${API_BASE}/items`, {
             method: 'GET',
             credentials: 'include'
         })
@@ -90,7 +94,7 @@
     function deleteItem(itemId) {
         if (!confirm('Are you sure you want to delete this item?')) return;
 
-        fetch(`http://localhost:5001/items/id/${itemId}`, {
+        fetch(`${API_BASE}/items/id/${itemId}`, {
             method: 'DELETE',
             credentials: 'include'
         })
