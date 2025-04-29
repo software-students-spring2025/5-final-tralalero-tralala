@@ -112,15 +112,15 @@ def me():
     return jsonify({"session": dict(session)}), 200
 
 
-@app.route("/test-login-form")
-def test_login_form():
-    return """
-    <form action="/login" method="post">
-        <input name="email" placeholder="Email"><br>
-        <input name="password" placeholder="Password" type="password"><br>
-        <button type="submit">Login</button>
-    </form>
-    """
+# @app.route("/test-login-form")
+# def test_login_form():
+#     return """
+#     <form action="/login" method="post">
+#         <input name="email" placeholder="Email"><br>
+#         <input name="password" placeholder="Password" type="password"><br>
+#         <button type="submit">Login</button>
+#     </form>
+#     """
 
 
 if __name__ == "__main__":
