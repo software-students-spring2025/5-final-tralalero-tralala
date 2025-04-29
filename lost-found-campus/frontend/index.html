@@ -8,7 +8,7 @@
 <body>
 
 <div class="container">
-    <h1>Welcome to Lost & Found</h1>
+    <h1>Welcome to NYU Lost & Found</h1>
 
     <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
         <!-- Login Form -->
@@ -72,7 +72,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
         if (response.ok) {
             document.getElementById('login-message').innerText = "✅ Login successful!";
             // Optionally redirect:
-            // window.location.href = "/dashboard.html";
+            window.location.href = "/home.html";
         } else {
             document.getElementById('login-message').innerText = "❌ " + result.error;
         }
@@ -112,6 +112,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
         document.getElementById('register-message').innerText = "❌ Error during registration.";
     }
 });
+
 </script>
 
 </body>

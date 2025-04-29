@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lost & Found - Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<!-- <body>
+    <h1>Welcome to Lost & Found!</h1>
+
+    <div id="itemContainer" class="container"></div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('http://localhost:5001/items', {
+            method: 'GET',
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(items => {
+            const container = document.getElementById('itemContainer');
+            container.innerHTML = '';
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'item-card';  // We'll add a little extra CSS for this
+
+                card.innerHTML = `
+                    <h2>${item.title}</h2>
+                    <p><strong>Status:</strong> ${item.status}</p>
+                    <p><strong>Location:</strong> ${item.location}</p>
+                    <p><strong>Description:</strong> ${item.description}</p>
+                    <p><strong>Contact:</strong> ${item.owner}</p>
+                `;
+
+                container.appendChild(card);
+            });
+        })
+        .catch(error => console.error('Error fetching items:', error));
+    });
+    </script>
+</body> -->
+
+<body>
+    <h1>Welcome to NYU Lost & Found!</h1>
+    <div class="top-right">
+        <button id="logoutButton">Logout</button>
+        <button id="profileButton">User Profile</button>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search by title...">
+    </div>
+
+    <div id="itemContainer" class="container"></div>
+    <button id="submitButton">+</button>
+    <script>
+    let allItems = [];
+
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('http://localhost:5001/items', {
+            method: 'GET',
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(items => {
+            allItems = items;  // Save all items globally
+            displayItems(allItems);
+        })
+        .catch(error => console.error('Error fetching items:', error));
+
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function () {
+            const query = searchInput.value.toLowerCase();
+            const filteredItems = allItems.filter(item =>
+                item.title.toLowerCase().includes(query)
+            );
+            displayItems(filteredItems);
+        });
+    });
+
+    function displayItems(items) {
+        const container = document.getElementById('itemContainer');
+        container.innerHTML = '';
+
+        items.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+
+            card.innerHTML = `
+                <h2>${item.title}</h2>
+                <p><strong>Status:</strong> ${item.status}</p>
+                <p><strong>Location:</strong> ${item.location}</p>
+                <p><strong>Description:</strong> ${item.description}</p>
+                <p><strong>Contact:</strong> ${item.owner}</p>
+            `;
+
+            container.appendChild(card);
+        });
+    }
+    document.getElementById('profileButton').addEventListener('click', function () {
+    window.location.href = '/profile.html';
+});
+document.getElementById('submitButton').addEventListener('click', function () {
+    window.location.href = '/submit.html';
+});
+document.getElementById('logoutButton').addEventListener('click', function () {
+    fetch('http://localhost:5001/logout', {
+        method: 'POST',
+        credentials: 'include'
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = '/index.html';  // Redirect back to login
+        } else {
+            console.error('Logout failed');
+        }
+    })
+    .catch(error => {
+        console.error('Error during logout:', error);
+    });
+});
+
+    </script>
+</body>
+
+</html>
