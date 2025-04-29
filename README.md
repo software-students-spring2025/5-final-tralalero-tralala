@@ -1,6 +1,5 @@
 [![Backend CI](https://github.com/software-students-spring2025/5-final-tralalero-tralala/actions/workflows/backend.yml/badge.svg)]
 [![Frontend CI](https://github.com/software-students-spring2025/5-final-tralalero-tralala/actions/workflows/frontend.yml/badge.svg)]
-[![Lint](https://github.com/software-students-spring2025/5-final-tralalero-tralala/actions/workflows/lint.yml/badge.svg)]
 
 # 🧭 Lost & Found @ NYU
 
