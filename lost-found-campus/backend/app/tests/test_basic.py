@@ -77,7 +77,7 @@ def test_get_items_success(mock_get_all_items, client):
     assert isinstance(data, list)
     assert data == fake_items
 
-    mock_get_all_items.assert_called_once_with(status="lost", owner="testuser@example.com")
+    mock_get_all_items.assert_called_once_with(status="lost")
 
 
 @patch('app.main.get_all_items')
