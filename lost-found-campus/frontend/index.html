@@ -58,7 +58,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
     };
     const API_BASE = location.hostname === "localhost"
     ? "http://localhost:5001"
-    : "http://167.99.148.70:5001"; //for both deployment and local to run
+    : "http://142.93.65.192:5001"; //for both deployment and local to run
 
     try {
         const response = await fetch(`${API_BASE}/login`, {
@@ -96,7 +96,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
     };
     const API_BASE = location.hostname === "localhost"
     ? "http://localhost:5001"
-    : "http://167.99.148.70:5001"; //for both deployment and local to run
+    : "http://142.93.65.192:5001"; //for both deployment and local to run
 
     try {
         const response = await fetch(`${API_BASE}/register`, {
