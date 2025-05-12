@@ -40,6 +40,9 @@ jobs:
         key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
         script: |
           cd 5-final-tralalero-tralala
+          echo "MONGO_URI=mongodb://mongo:27017/lostfound" > .env
+          echo "SECRET_KEY=secretkey" >> .env
+          echo "DEBUG=True" >> .env
           git pull origin main
           docker-compose down
           docker-compose pull
